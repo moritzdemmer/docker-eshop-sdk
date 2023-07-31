@@ -51,6 +51,10 @@ generate-docs:
 node:
 	docker compose run --rm node bash
 
+mysql:
+	docker compose exec db bash -c 'mysql -u$$MYSQL_USER -p$$MYSQL_PASSWORD -h$$MYSQL_HOST $$MYSQL_DATABASE'
+
+
 addservice:
 	@cat $(file) >> docker-compose.yml
 	@echo "\n" >> docker-compose.yml
@@ -59,12 +63,20 @@ addservice:
 addbasicservices:
 	@make file=services/apache.yml addservice
 	@make file=services/php.yml addservice
-	@make file=services/mysql.yml addservice
+	@make file=services/db.yml addservice
+	@make file=services/mailhog.yml addservice
+
 	@echo "php, apache and mysql related services added\n";
 
 addsphinxservice:
 	@echo "\nDOC_PATH=$(docpath)" >> .env
 	@make file=services/sphinx.yml addservice
+
+addallservices:
+	@for servicefile in services/*.yml; do \
+		make file=$$servicefile addservice; \
+	done
+	@echo "All services from services folder added\n";
 
 cleanup:
 	@make down
