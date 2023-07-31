@@ -1,0 +1,12 @@
+  grunt:
+    build:
+      context: containers/grunt
+      args:
+        CONTAINER_GID: ${CONTAINER_GID}
+        CONTAINER_UID: ${CONTAINER_UID}
+        CONTAINER_USER: ${CONTAINER_USER}
+        HOME: ${HOME}
+    restart: "no"
+    volumes:
+      - ./source:/var/www:cached
+    user: "${CONTAINER_UID}:${CONTAINER_GID}"

@@ -1,0 +1,8 @@
+  python:
+    build:
+      context: ./containers/python
+    volumes:
+      - ./source/:/var/www/source:cached
+      - ./:/dockerbox:cached
+    tty: true
+    working_dir: /dockerbox
