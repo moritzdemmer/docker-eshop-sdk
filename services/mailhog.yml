@@ -1,0 +1,7 @@
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - ${MAILHOG_SMTP_PORT}:1025 # smtp server
+      - ${MAILHOG_UI_PORT}:8025 # web ui
