@@ -8,6 +8,9 @@
         HOST_GROUP_ID: ${HOST_GROUP_ID}
         HOST_USER_NAME: ${HOST_USER_NAME}
         HOST_GROUP_NAME: ${HOST_GROUP_NAME}
+    environment:
+      DOMAIN: ${DOMAIN}
+      PROTOCOL: ${PROTOCOL}
     links:
       - "apache:localhost.local"
       - "apache:oxideshop.local"
