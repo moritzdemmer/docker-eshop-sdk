@@ -15,6 +15,6 @@
       interval: 1s
       retries: 30
     volumes:
-      - ./data/mysql:/var/lib/mysql:cached
+      - ./data/mysql:/var/lib/mysql:delegated
     ports:
       - ${DB_PORT}:3306

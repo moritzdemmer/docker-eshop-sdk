@@ -1,7 +1,7 @@
   sftp:
     image: atmoz/sftp
     volumes:
-      - ./data/sftp/ESHOP:/home/sftp/ESHOP:cached
+      - ./data/sftp:/home/sftp:cached
     ports:
       - ${SFTP_PORT}:22
     command: sftp:sftp:1001

@@ -6,3 +6,5 @@
       - discovery.type=single-node
     ports:
       - ${ES_PORT}:9200
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data:delegated
