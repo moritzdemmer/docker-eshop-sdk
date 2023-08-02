@@ -65,7 +65,7 @@ addbasicservices:
 	@make file=services/php.yml addservice
 	@make file=services/db.yml addservice
 	@make file=services/mailhog.yml addservice
-
+	@make file=services/adminer.yml addservice
 	@echo "php, apache and mysql related services added\n";
 
 addsphinxservice:
