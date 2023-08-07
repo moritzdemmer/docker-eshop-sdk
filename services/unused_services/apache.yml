@@ -2,6 +2,8 @@
     platform: linux/x86_64
     build:
       context: containers/httpd
+      args:
+        DOMAIN: ${DOMAIN}
     working_dir: /var/www/
     volumes:
       - ./source:/var/www:cached

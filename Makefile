@@ -54,29 +54,33 @@ node:
 mysql:
 	docker compose exec db bash -c 'mysql -u$$MYSQL_USER -p$$MYSQL_PASSWORD -h$$MYSQL_HOST $$MYSQL_DATABASE'
 
+addservice_noswitch:
+	@cat services/$(service).yml >> docker-compose.yml
+	@echo "\n" >> docker-compose.yml
+	@echo "Service file $(service) contents added\n";
 
 addservice:
-	@cat $(file) >> docker-compose.yml
-	@echo "\n" >> docker-compose.yml
-	@echo "Service file $(file) contents added\n";
+	@mv services/unused_services/$(service).yml services/$(service).yml
+	@make service=$(service) addservice_noswitch
 
 addbasicservices:
-	@make file=services/apache.yml addservice
-	@make file=services/php.yml addservice
-	@make file=services/db.yml addservice
-	@make file=services/mailhog.yml addservice
-	@make file=services/adminer.yml addservice
+	@make service=apache addservice
+	@make service=php addservice
+	@make service=db addservice
+	@make service=mailhog addservice
+	@make service=adminer addservice
 	@echo "php, apache and mysql related services added\n";
 
 addsphinxservice:
 	@echo "\nDOC_PATH=$(docpath)" >> .env
-	@make file=services/sphinx.yml addservice
+	@make service=sphinx addservice
 
 addallservices:
-	@for servicefile in services/*.yml; do \
-		make file=$$servicefile addservice; \
+	@for service_file in services/*.yml; do \
+		service=$$(basename $$service_file .yml); \
+		make service=$$service addservice_noswitch; \
 	done
-	@echo "All services from services folder added\n";
+	@echo "All services from the services folder have been added.\n";
 
 cleanup:
 	@make down
