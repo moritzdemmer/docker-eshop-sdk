@@ -38,6 +38,7 @@ example:
 
 up:
 	docker compose up --build -d
+	sudo bash update_hosts.sh
 
 down:
 	docker compose down --remove-orphans
