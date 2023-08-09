@@ -20,15 +20,7 @@ fi
 source .env
 
 # Die /etc/hosts-Datei aktualisieren
-if grep -q "^[^#]*\s*$DOMAIN\s*$" /etc/hosts; then
-  sed -i "/\s$DOMAIN\s*$/ s/^[^#]*/127.0.0.1/" /etc/hosts
-  if [ $? -eq 0 ]; then
-    echo "Die /etc/hosts-Datei wurde erfolgreich aktualisiert."
-  else
-    echo "Fehler beim Aktualisieren der /etc/hosts-Datei."
-    exit 1
-  fi
-else
+if ! grep -q -P "^\s*127\.0\.0\.1\s+$DOMAIN" /etc/hosts; then
   echo -e "127.0.0.1\t$DOMAIN" >> /etc/hosts
   if [ $? -eq 0 ]; then
     echo "Die /etc/hosts-Datei wurde erfolgreich aktualisiert."
@@ -36,6 +28,8 @@ else
     echo "Fehler beim Hinzufügen der Domain zur /etc/hosts-Datei."
     exit 1
   fi
+else
+  echo "Der Eintrag existiert bereits in der /etc/hosts-Datei. Keine Änderungen vorgenommen."
 fi
 
 exit 0
